@@ -2,7 +2,7 @@ name: CD
 
 on:
   push:
-    branches: [main]
+    branches: [cloud]
 
 env:
   APP_NAME: fn-monitor
