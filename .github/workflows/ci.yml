@@ -33,25 +33,3 @@ jobs:
             ${{ env.IMAGE_NAME }}:${{ github.sha }}
             ${{ env.IMAGE_NAME }}:latest
           cache-from: type=gha  
-
-  # deploy:
-  #   name: Deploy to K8s
-  #   needs: docker-push
-  #   runs-on: ubuntu-latest
-  #   steps:
-  #     - uses: actions/checkout@v4
-
-  #     # 3. 生成新版本的 deployment patch
-  #     - run: |
-  #         curl -s "https://raw.githubusercontent.com/kubernetes-sigs/kustomize/master/hack/install_kustomize.sh" | bash
-  #         sudo mv kustomize /usr/local/bin/
-  #         cd k8s/overlays/prod
-  #         kustomize edit set image ${{ env.APP_NAME }}=${{ env.IMAGE_NAME }}:${{ github.sha }}
-
-  #     # 4. 部署（需 KUBECONFIG 秘钥）
-  #     - uses: azure/k8s-deploy@v5
-  #       with:
-  #         manifests: |
-  #           k8s/overlays/prod
-  #         kubectl-version: 'latest'
-  #         kubeconfig: ${{ secrets.KUBECONFIG }}
