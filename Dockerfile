@@ -1,11 +1,11 @@
 # ---- 构建阶段 ----
-FROM python:3.11-slim AS builder
+FROM registry.cn-chengdu.aliyuncs.com/zrqpublic/fn-monitor:python-3.11-slim AS builder
 WORKDIR /build
 COPY requirements.txt .
-RUN pip install --user -r requirements.txt
+RUN pip install --user -r requirements.txt -i http://mirrors.aliyun.com/pypi/simple --trusted-host mirrors.aliyun.com
 
 # ---- 运行阶段 ----
-FROM python:3.11-slim
+FROM registry.cn-chengdu.aliyuncs.com/zrqpublic/fn-monitor:python-3.11-slim
 WORKDIR /app
 
 # 1. 拷贝已安装的库
