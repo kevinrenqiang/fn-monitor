@@ -1,4 +1,4 @@
-name: CD
+name: CI
 
 on:
   push:
@@ -25,7 +25,6 @@ jobs:
           username: ${{ secrets.ACR_USERNAME }}
           password: ${{ secrets.ACR_PASSWORD }}          
 
-      # 2. 构建并推送
       - uses: docker/build-push-action@v5
         with:
           context: .
@@ -33,7 +32,7 @@ jobs:
           tags: |
             ${{ env.IMAGE_NAME }}:${{ github.sha }}
             ${{ env.IMAGE_NAME }}:latest
-          cache-from: type=gha   # 只用读缓存，不写缓存
+          cache-from: type=gha  
 
   # deploy:
   #   name: Deploy to K8s
