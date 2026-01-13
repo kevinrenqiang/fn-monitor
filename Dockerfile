@@ -1,0 +1,20 @@
+# ---- 构建阶段 ----
+FROM python:3.11-slim AS builder
+WORKDIR /build
+COPY requirements.txt .
+RUN pip install --user -r requirements.txt
+
+# ---- 运行阶段 ----
+FROM python:3.11-slim
+WORKDIR /app
+
+# 1. 拷贝已安装的库
+COPY --from=builder /root/.local /root/.local
+ENV PATH=/root/.local/bin:$PATH
+
+# 2. 拷贝 exporter 代码
+COPY exporter.py .
+
+# 3. 容器里同样监听 7733
+EXPOSE 7733
+ENTRYPOINT ["python", "exporter.py"]
