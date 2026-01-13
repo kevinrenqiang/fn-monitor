@@ -8,7 +8,7 @@ env:
   APP_NAME: fn-monitor
   ALIYUN_REGISTRY: registry.cn-chengdu.aliyuncs.com
   ALIYUN_NAMESPACE: zrqpublic/fn-monitor
-  IMAGE_NAME: registry.cn-chengdu.aliyuncs.com/zrqpublic/fn-monitor:latest
+  IMAGE_NAME: registry.cn-chengdu.aliyuncs.com/zrqpublic/fn-monitor
 jobs:
   docker-push:
     name: Build & Push to ACR
