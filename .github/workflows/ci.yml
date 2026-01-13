@@ -18,19 +18,9 @@ jobs:
 
     steps:
       - uses: actions/checkout@v4
-      # ---------- 3. 检查 Secrets 是否非空（不暴露内容） ----------
-      
-      - name: Check ACR Secrets
-        run: |
-          if [ -z "${{ secrets.ACR_USERNAME }}" ] || [ -z "${{ secrets.ACR_PASSWORD }}" ]; then
-            echo "ACR_USERNAME or ACR_PASSWORD is not set. Exiting."
-            exit 1
-          fi
       - uses: docker/login-action@v3
         with:
           registry: ${{ env.ALIYUN_REGISTRY }}
-          # username: '天有多云'
-          # password: 'zhang!@12345'
           username: ${{ secrets.ACR_USERNAME }}
           password: ${{ secrets.ACR_PASSWORD }}          
 
