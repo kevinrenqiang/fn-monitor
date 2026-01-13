@@ -1,36 +1,35 @@
 name: CD
 
 on:
-  workflow_run:          # CI 跑完再触发
+  workflow_run:
     workflows: ["CI"]
     branches: [cloud]
-    types: [completed"]
+    types: [completed]
 
 env:
-  IMAGE: registry.cn-chengdu.aliyuncs.com/zrqpublic/fn-monitor
+  IMAGE_NAME: registry.cn-chengdu.aliyuncs.com/zrqpublic/fn-monitor
   CONTAINER: fn-monitor
 
 jobs:
   deploy:
-    runs-on: jump-zrq    # 关键：只落在你自己的这台机器
+    runs-on: jump-zrq
     if: ${{ github.event.workflow_run.conclusion == 'success' }}
-
     steps:
-      - name: Pull latest image
-        run: docker pull ${{ IMAGE }}:${{ github.sha }}
+      - name: Pull new image
+        run: docker pull ${{ env.IMAGE_NAME }}:${{ github.sha }}
 
       - name: Stop & remove old container
         run: |
-          docker stop ${{ CONTAINER }} || true
-          docker rm   ${{ CONTAINER }} || true
+          docker stop ${{ env.CONTAINER }} || true
+          docker rm   ${{ env.CONTAINER }} || true
 
       - name: Start new container
         run: |
           docker run -d --restart=unless-stopped \
             -p 7733:7733 \
             -v /tmp:/tmp:ro \
-            --name ${{ CONTAINER }} \
-            ${{ IMAGE }}:${{ github.sha }}
+            --name ${{ env.CONTAINER }} \
+            ${{ env.IMAGE_NAME }}:${{ github.sha }}
 
       - name: Health check
         run: |
