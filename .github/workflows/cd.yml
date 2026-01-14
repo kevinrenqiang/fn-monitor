@@ -16,7 +16,7 @@ jobs:
     if: ${{ github.event.workflow_run.conclusion == 'success' }}
     steps:
       - name: Pull new image
-        run: docker pull ${{ env.IMAGE_NAME }}:${{ github.sha }}
+        run: docker pull ${{ env.IMAGE_NAME }}:latest
 
       - name: Stop & remove old container
         run: |
@@ -29,7 +29,7 @@ jobs:
             -p 7733:7733 \
             -v /tmp:/tmp:ro \
             --name ${{ env.CONTAINER }} \
-            ${{ env.IMAGE_NAME }}:${{ github.sha }}
+            ${{ env.IMAGE_NAME }}::latest
 
       - name: Health check
         run: |
