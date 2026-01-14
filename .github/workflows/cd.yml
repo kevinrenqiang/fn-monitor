@@ -25,11 +25,12 @@ jobs:
 
       - name: Start new container
         run: |
+          mkdir -p /home/zrq/fn-monitor
           docker run -d --restart=unless-stopped \
             -p 7733:7733 \
-            -v /tmp:/tmp:ro \
+            -v /fn-monitor:/tmp:ro \
             --name ${{ env.CONTAINER }} \
-            ${{ env.IMAGE_NAME }}::latest
+            ${{ env.IMAGE_NAME }}:latest
 
       - name: Health check
         run: |
