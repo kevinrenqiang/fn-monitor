@@ -10,14 +10,12 @@ RUN pip install --user -r requirements.txt \
 FROM registry.cn-chengdu.aliyuncs.com/zrqpublic/fn-monitor:python-3.11-slim
 WORKDIR /app
 
-# 1. 拷贝已安装的库
 COPY --from=builder /root/.local /root/.local
 ENV PATH=/root/.local/bin:$PATH
 ENV PYTHONPATH=/root/.local/lib/python3.11/site-packages:$PYTHONPATH
 
-# 2. 拷贝 exporter 代码
-COPY exporter.py .
+# 拷贝全部项目文件
+COPY . .
 
-# 3. 容器里同样监听 7733
 EXPOSE 7733
 ENTRYPOINT ["python", "/app/exporter.py"]

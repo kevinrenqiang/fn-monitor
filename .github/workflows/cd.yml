@@ -29,6 +29,7 @@ jobs:
           docker run -d --restart=unless-stopped \
             -p 7733:7733 \
             -v /tmp:/tmp:ro \
+            -v /usr/bin/kubectl:/host/usr/bin/kubectl:ro \
             --name ${{ env.CONTAINER }} \
             ${{ env.IMAGE_NAME }}:latest
 

@@ -1,0 +1,9 @@
+# 每 N 秒全局轮询一次
+interval: 3
+
+tasks:
+  - name: check_file
+    class: tasks.check_file_task.CheckFileTask
+
+  - name: kubectl_version
+    class: tasks.kubectl_version_task.KubectlVersionTask
